@@ -1,0 +1,6 @@
+---
+Name: api
+---
+Doggo\Task\FetchParksTask:
+  api_title: 'Wellington City Council'
+  api_url: 'https://doggo-test.s3-ap-southeast-2.amazonaws.com/WCC_Dog_Areas_20200213.geojson'
