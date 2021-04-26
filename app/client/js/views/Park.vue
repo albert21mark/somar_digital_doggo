@@ -7,10 +7,15 @@
     </ul>
     <p class="park__notes">{{ park.Notes }}</p>
     <p class="park__provider">Managed by <strong>{{ park.Provider }}</strong></p>
+    
+    <input type="file" @change="uploadPhotos($event)" :id="`${park.ID}`"> 
+    <p>Photos uploaded by users</p>
+    <img :src="`${park.photosURL}`" id="uploadedPhotos"/>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   computed: {
     park() {
@@ -20,6 +25,16 @@ export default {
       return this.$store.state.parks;
     },
   },
+  methods:{
+    uploadPhotos(e){
+      const URL = '//192.168.20.51/doggo/doggo/public/assets/upload_images'; 
+     
+      const formData = new FormData();
+      formData.append(e.target.files[0], e.target.files[0].name)
+      axios.post(URL, formData)
+      this.$store.dispatch("uploadPhotos", e)
+    }
+  }
 };
 </script>
 

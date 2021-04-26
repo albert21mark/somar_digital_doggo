@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     error: false,
     parks: [],
+    url: [],
   },
   mutations: {
     clearError(state) {
@@ -19,6 +20,12 @@ export default new Vuex.Store({
     updateParks(state, payload) {
       state.parks = payload;
     },
+    SET_URL(state, url){
+      state.url = url;
+      //const url1 = state.parks.find(url);
+      //url1.url = '123';
+
+    }
   },
   actions: {
     fetchParks({ commit }) {
@@ -36,5 +43,19 @@ export default new Vuex.Store({
           });
       });
     },
+ 
+    uploadPhotos({ commit },e){
+      return new Promise((resolve, reject) => {
+        axios.post(`api/v1/parks/` + e.target.id,null,{
+          params:{
+            urlPhoto : e.target.files[0].name
+          }
+        })
+        .then((response) => {
+          console.log(e)
+          commit('SET_URL',  response.data);
+        });
+      });
+    }
   },
 });

@@ -6,6 +6,8 @@ use Doggo\Model\Park;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\ORM\DB;
+
 
 class ParkController extends Controller 
 {
@@ -15,24 +17,26 @@ class ParkController extends Controller
 
     public function index(HTTPRequest $request) 
     {
+       
         if (!$request->isGET()) {
-            return $this->json(['error' => 'Method not allowed'], 405);
+            DB::query("UPDATE `SS_doggo`.`Park` SET \"url\" = '/public/assets/upload_images/{$_GET['urlPhoto']}' WHERE \"ID\" = {$request->param('ID')}");
+        }else{
+            
+            $id = $request->param('ID');
+            if (empty($id)) {
+                $parks = Park::get()->toArray();
+                return $this->json($parks);
+            }
+    
+            $park = Park::get_by_id($id);
+    
+            if (!$park) {
+                return $this->json(['error' => 'Park does not exist'], 404);
+            }
+    
+            return $this->json($park);
+
         }
-
-        $id = $request->param('ID');
-
-        if (empty($id)) {
-            $parks = Park::get()->toArray();
-            return $this->json($parks);
-        }
-
-        $park = Park::get_by_id($id);
-
-        if (!$park) {
-            return $this->json(['error' => 'Park does not exist'], 404);
-        }
-
-        return $this->json($park);
     }
 
     /**

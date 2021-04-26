@@ -19,6 +19,14 @@ class Park extends DataObject implements JsonSerializable
         'GeoJson' => 'Text',
         'FeatureOnOffLeash' => "Enum(array('On-leash', 'Off-leash'), 'On-leash')",
         'IsToPurge' => 'Boolean',
+        'url' => 'Varchar(100)',
+    ];
+
+    private static $photosUploaded = [
+        
+        'parkID' => 'Int',
+        'photosURL'=> 'Varchar(100)',
+
     ];
 
     private static $summary_fields = [
@@ -47,6 +55,7 @@ class Park extends DataObject implements JsonSerializable
         return $validate;
     }
 
+
     public function jsonSerialize()
     {
         return [
@@ -61,6 +70,7 @@ class Park extends DataObject implements JsonSerializable
             'FeatureOnOffLeash' => $this->FeatureOnOffLeash,
             'LastEdited' => $this->LastEdited,
             'Created' => $this->Created,
+            'URL' => $this->url,
         ];
     }
 }

@@ -30,6 +30,7 @@ import Filters from './components/Filters.vue';
 import Mapbox from 'mapbox-gl-vue';
 import Vue from 'vue';
 
+
 let globalMap = null;
 
 export default {

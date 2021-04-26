@@ -4,7 +4,6 @@ namespace Doggo\Admin;
 
 use Doggo\Model\Park;
 use SilverStripe\Admin\ModelAdmin;
-
 class ParkAdmin extends ModelAdmin
 {
     private static $managed_models = [
